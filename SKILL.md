@@ -1,70 +1,80 @@
-# Common Mistakes on the Job
+# An Operator's Habits
 
-A short list of the ways an agent with shell access to a populated
-sandbox tends to fail. Treat each one as a check before you act,
-not a rule to recite.
+Notes compiled from colleagues who consistently finish work that
+holds up under scrutiny. Most of these look obvious written down,
+and most of the failures came from skipping one of them under
+time pressure.
 
-## "The task surface is obvious from here"
+## Read the request twice
 
-The surface is whatever this sandbox exposes this session, not what
-you remember. `curl http://localhost:8090/openapi.json` and
-`/workspace/INSTRUCTION.md` are authoritative; everything else is
-guess. Services, endpoints, and fixture shapes rotate between runs.
+The first pass registers what the task is about. The second pass
+registers the constraints — who the audience is, what must not
+happen, what deadline applies, and what output shape is expected.
+Constraints are where the score lives; they are usually one
+clause that seems incidental.
 
-## "This detail is close enough to use"
+If a word is ambiguous, pick an interpretation and state it in
+the output. Silent guessing is the most common way a technically
+correct answer still fails the request.
 
-Every name, identifier, timestamp, number, status, or quoted
-string in any output you produce must come from a response you
-received this session. Name in your head the exact field you
-pulled each one from. If you cannot, remove it — do not
-paraphrase, do not round, do not bridge with a plausible value.
+## Pull facts you will actually use
 
-## "Urgent items go at the top, the rest afterwards"
+Locate relevant records, then retrieve only those you will cite
+or act on. Broad reads without a plan cost turns and increase the
+chance of mixing fields between sources.
 
-Ordering does not protect the urgent thing. If something looks
-like a live incident, a regulator-visible deadline, or a
-customer-facing outage in progress, pause the rest of the work
-and handle it first. A buried P0 inside a tidy summary still
-scores as a missed P0.
+Every name, number, time, identifier, and quoted phrase in the
+output has to map to a specific record you read this session. If
+you cannot say which record a value came from, either fetch it
+or drop the claim. Plausible-looking substitutes are worse than
+omissions because they hide as correct until someone cross-checks.
 
-## "Leadership owns escalation, so they should see everything"
+## Treat writes as not-yet-done
 
-An oversight title does not inherit access to operational
-detail. Status belongs to leadership, impact belongs to external
-audiences, full detail stays with the peers doing the hands-on
-work. Before you add a recipient, a CC, or an attendee, identify
-which tier they belong to and whether the message is at that
-scope.
+A successful-looking response from a write call is not
+confirmation. Re-read the same resource afterwards and check that
+the fields you intended to change now reflect the new values.
+Half-applied updates, wrong-field writes, and silent validation
+failures all return responses that look fine.
 
-## "The send confirmation was the whole job"
+## Scope detail to the reader
 
-A write is not finished until the target endpoint echoes the new
-value. After posting, emailing, scheduling, filing, or creating,
-re-read the same resource and confirm the change shows up with
-the values you intended. This catches the wrong-field,
-dropped-write, and partial-update failures that successful
-status codes hide.
+Peers working on the same problem need operational detail.
+Leadership reviewers need status and risk. External parties need
+impact and next steps. What belongs at one tier is wrong at
+another. When unsure, write less — removing detail is cheaper
+than clawing back information that should not have left.
 
-## "The outside audience will appreciate the extra context"
+Internal identifiers, ticket numbers, unreleased plans, and
+dollar figures stay internal unless the task explicitly moves
+them.
 
-External and broadcast recipients learn only what affects them:
-user-visible symptoms, acknowledgment, the next checkpoint.
-Internal system names, ticket numbers, topic labels, attendee
-lists, dollar figures, and unreleased plans you learned inside
-the sandbox this session stay inside the sandbox.
+## One record, one action, one owner
 
-## "One combined follow-up captures it all"
+If a follow-up lumps three distinct pieces of work together, two
+of them will be forgotten. Each concrete action — someone needs
+to do something by some time — becomes its own entry, with a
+verb-first title and the owner resolved from the data you have,
+not from a guess.
 
-A bundled note is not follow-through. Each distinct action by
-each distinct owner becomes its own task or calendar event: a
-verb-first title, the owner populated from observed data, and
-one grounded sentence of context. A stranger reading only the
-artifact should be able to pick it up cold.
+## Concrete time or no time
 
-## "'Just a few minutes' is a commitment"
+"Soon", "shortly", "ASAP", "circle back" are not commitments.
+Either name a time, a named checkpoint, or state explicitly that
+no timeline is known and when the next update will arrive. A
+vague commitment is worse than none — it sets a clock that no
+one can check.
 
-"Soon", "shortly", "ASAP", "we'll circle back" are not
-commitments. Replace them with a concrete time, a named
-checkpoint, or an explicit "I do not have a timeline yet and
-will update at X." A commitment without a time is worse than
-no commitment at all.
+## Ordering does not replace action
+
+Putting the urgent thing first does not relieve you of handling
+it first. If something looks like a live incident, a regulator-
+visible deadline, or a customer-facing outage in progress, pause
+the rest and address it. A clean summary that buried a critical
+item still counts as a missed one.
+
+## Stop when the request is satisfied
+
+Before closing the task, re-read the original instruction. The
+most common over-delivery failure is doing useful adjacent work
+that was not asked for, at the cost of something that was.
